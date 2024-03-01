@@ -1,5 +1,8 @@
 const bcrypt = require("bcrypt");
 const gravatar = require("gravatar");
+const jwt = require("jsonwebtoken");
+
+const { SECRET_KEY } = process.env;
 
 const { HttpError, ctrlWrapper } = require("../../helpers");
 
@@ -18,9 +21,18 @@ const register = async (req, res) => {
 
   const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL });
 
+  const payload = { id: newUser._id };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
+
+  await User.findByIdAndUpdate(newUser._id, { token });
+
+
   res.status(201).json({
-    email: newUser.email,
-    subscription: newUser.subscription,
+    user: {
+      name: newUser.name,
+      email: newUser.email,
+    },
+    token: token,
   });
 };
 
