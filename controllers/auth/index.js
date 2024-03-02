@@ -7,6 +7,8 @@ const getProductsCategories = require("./products");
 const getAllExercises = require("./exercises");
 const getFilters = require("./exercises");
 const getProductsByBloodType = require("./products");
+const addUserData = require("./addUserData");
+const getUserParams = require("./getUserParams");
 
 module.exports = {
   register,
@@ -18,4 +20,6 @@ module.exports = {
   getAllExercises,
   getFilters,
   getProductsByBloodType,
+  addUserData,
+  getUserParams,
 };

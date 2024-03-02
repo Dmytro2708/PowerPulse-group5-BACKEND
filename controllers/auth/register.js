@@ -26,14 +26,13 @@ const register = async (req, res) => {
 
   await User.findByIdAndUpdate(newUser._id, { token });
 
-
-  res.status(201).json({
+   res.status(201).json({
     user: {
       name: newUser.name,
       email: newUser.email,
     },
     token: token,
-  });
+      });
 };
 
 module.exports = ctrlWrapper(register);
