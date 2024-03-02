@@ -6,6 +6,8 @@ const updateAvatar = require("./updateAvatar");
 const getProductsCategories = require("./products");
 const getAllExercises = require("./exercises");
 const getFilters = require("./exercises");
+const getProductsByBloodType = require("./products");
+
 module.exports = {
   register,
   login,
@@ -15,4 +17,5 @@ module.exports = {
   getProductsCategories,
   getAllExercises,
   getFilters,
+  getProductsByBloodType,
 };
