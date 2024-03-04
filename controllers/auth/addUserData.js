@@ -23,8 +23,7 @@ const addUserData = async (req, res) => {
   
       await updatedData.save();
       if (updatedData) {
-        const responseData = { ...updatedData.toObject(), bmr }
-        res.status(201).json(responseData);
+        res.status(201).json(updatedData);
       } else {
         throw HttpError(404, 'User not found');
       }

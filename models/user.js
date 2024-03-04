@@ -27,11 +27,11 @@ const userSchema = new Schema(
     },
     currentWeight: {
       type: Number,
-      default: 60,
+      default: 35,
     },
     desiredWeight: {
       type: Number,
-      default: 60,
+      default: 35,
     },
     birthday: {
       type: Date,
@@ -66,6 +66,10 @@ const userSchema = new Schema(
     avatarURL: {
       type: String,
       required: true,
+    },
+    bmr: {
+      type: Number,
+      default: "",
     },
   },
   { versionKey: false, timestamps: true }
@@ -119,7 +123,7 @@ const addUserDataSchema = Joi.object({
 });
 
 const addUserParamsSchema = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string(),
   height: Joi.number().min(35).required().messages({
     'any.required': `Missing required height field`,
   }),
