@@ -152,6 +152,19 @@
 				}
 			}	
 		},
+
+
+
+
+
+
+
+
+
+
+
+
+        
 		"/api/auth/logout": {
 			"post": {
 				"tags": ["Auth"],
