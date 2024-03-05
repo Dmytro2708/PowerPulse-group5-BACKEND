@@ -2,7 +2,7 @@ const { ctrlWrapper, HttpError} = require("../../helpers");
 const { Diary } = require("../../models/diary");
 
 const deleteExercise = async (req, res) => {
-const {exerciseId, data} = req.query;
+const {exerciseId, data} = req.body;
 const {_id: owner} = req.user;
 
 const userFind = await Diary.findOne({owner, data});
@@ -11,15 +11,15 @@ if(!userFind){
    throw HttpError(404)
 }
 
-const exercise = userFind.exercises.find(exercise=>exercise._id===exerciseId);
+const exercise = userFind.exercises.find(exercise=>exercise.exerciseId===exerciseId);
 
 if(!exercise){
     throw HttpError(404)
 }
 else{
-    await Diary.findByIdAndDelete(_id, {
-        $inc: { burnedCalories: -exercises.calories, ExercisesTime: -time },
-        $pull: { exercises: { _id: exerciseId } },
+    await Diary.findOneAndDelete(exerciseId, {
+        $inc: { burnedCalories: -userFind.exercises.calories, ExercisesTime: -userFind.exercises.time },
+        $pull: { exercises: { exerciseId: exerciseId } },
     });
 
     res.status(200).json({message: "Exercise delete"})

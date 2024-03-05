@@ -22,18 +22,20 @@ const addExercise = async (req, res) => {
        const newExerciseDiary=await Diary.create({
             owner,
             date,
-            burnedCalories,
+            burnedCalories: calories,
+            ExercisesTime: time,
             exercises: [newExercise]
         });
         res.status(201).json(newExerciseDiary);
       }
       else{
-        upDateExercise = await Diary.findByIdAndUpdate(
-          _id,
+        upDateExercise = await Diary.findOneAndUpdate(
+          exerciseId,
             {
               $inc: { burnedCalories: +calories, ExercisesTime: +time }, 
               $push: { exercises: { exerciseId, time, calories } }, 
-            }
+            },
+            {new: true}
           );
           res.status(200).json(upDateExercise);
       }
