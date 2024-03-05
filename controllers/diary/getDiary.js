@@ -1,24 +1,36 @@
 const { ctrlWrapper, HttpError } = require("../../helpers");
 const { Diary } = require("../../models/diary");
-const {Exercise} = require("../../models/exercises");
-const {Product} = require("../../models/products");
+const { Exercise } = require("../../models/exercises");
+const { Product } = require("../../models/products");
 
 const getDiary = async (req, res) => {
-    const {_id: owner} = req.user;
-    const {date} = req.body;
+  const { _id: owner } = req.user;
+  const { date } = req.body;
 
-    const userFind = await Diary.findOne({date, owner});
-    if(!userFind){
-        throw HttpError(404)
-    }
-   else {
-       const resultExercises = await Diary.find({date, owner}).populate("exercises.exerciseId", "bodyPart equipment name target");
-  
-       const resultProducts =  await Diary.find({date, owner}).populate("products.productId", "weight category title groupBloodNotAllowed");
+  const userFind = await Diary.findOne({ date, owner });
+  if (!userFind) {
+    throw HttpError(404);
+  } else {
+    const resultExercises = await Diary.find({ date, owner })
+      .populate({
+        path: "exercises.exerciseId",
+        select: "bodyPart equipment name target",
+      })
+      .exec();
 
-       const infoUserProdactsExercises = {...resultExercises,...resultProducts};
-   res.status(201).json(infoUserProdactsExercises);
-}
+    const resultProducts = await Diary.find({ date, owner })
+      .populate(
+        "products.productId",
+        "weight category title groupBloodNotAllowed"
+      )
+      .exec();
+
+    const infoUserProdactsExercises = {
+      exercises: resultExercises,
+      products: resultProducts,
+    };
+    res.status(201).json(infoUserProdactsExercises);
+  }
 };
 
 module.exports = ctrlWrapper(getDiary);
