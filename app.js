@@ -9,6 +9,7 @@ const app = express();
 const authRouter = require("./routes/auth");
 const productsRouter = require("./routes/products");
 const exercisesRouter = require("./routes/exercises");
+const filtersRouter = require("./routes/filters");
 const diaryRouter = require("./routes/diary");
 
 app.use(morgan("tiny"));
@@ -19,6 +20,7 @@ app.use(express.static("public"));
 app.use("/api/users", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/exercises", exercisesRouter);
+app.use("/api/filter", filtersRouter);
 app.use("/api/diary", diaryRouter);
 
 app.use((_, res) => {

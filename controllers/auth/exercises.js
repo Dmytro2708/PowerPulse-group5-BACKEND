@@ -8,14 +8,15 @@ const getAllExercises = async (req, res) => {
   }
   res.status(200).json(exercises);
 };
-const getFilters = async (req, res) => {
-  const filters = await Filter.find();
-  if (!filter) {
-    throw HttpError(404, "Not found");
+const getFiltersByType = async (req, res) => {
+  const filterType = req.query.type;
+  const filters = await Filter.find({ filter: filterType });
+  if (!filters) {
+    throw HttpError(404, "Filters not found");
   }
   res.status(200).json(filters);
 };
 module.exports = {
   getAllExercises: ctrlWrapper(getAllExercises),
-  getFilters: ctrlWrapper(getFilters),
+  getFiltersByType: ctrlWrapper(getFiltersByType),
 };

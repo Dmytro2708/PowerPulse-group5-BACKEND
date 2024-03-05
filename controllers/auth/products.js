@@ -4,14 +4,17 @@ const path = require("path");
 const { ctrlWrapper, HttpError } = require("../../helpers");
 const Product = require("../../models/products");
 
-const productsPath = path.resolve("productsCategories.json");
+const productsPath = path.resolve(__dirname, "../../productsCategories.json");
 
-const getProductsCategories = async () => {
+
+const getProductsCategories = async (req, res) => {
   const products = await fs.readFile(productsPath, "utf8");
   if (!products) {
     throw HttpError(404, "Not found");
   }
-  return JSON.parse(products);
+  const productList = JSON.parse(products);
+  res.json(productList);
+
 };
 
 const getProductsByBloodType = async (req, res) => {
