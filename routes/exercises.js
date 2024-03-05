@@ -5,7 +5,7 @@ const router = express.Router();
 const {
   getAllExercises,
   getFiltersByType,
-} = require("../controllers/auth/exercises");
+} = require("../controllers/exercises");
 
 const { authenticate } = require("../middlewares");
 

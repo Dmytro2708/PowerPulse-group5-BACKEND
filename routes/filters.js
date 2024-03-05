@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const { getFiltersByType } = require("../controllers/auth/exercises");
+const { getFiltersByType } = require("../controllers/exercises");
 
 const { authenticate } = require("../middlewares");
 
