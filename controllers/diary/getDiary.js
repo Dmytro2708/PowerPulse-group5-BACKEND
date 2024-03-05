@@ -5,24 +5,20 @@ const {Product} = require("../../models/products");
 
 const getDiary = async (req, res) => {
     const {_id: owner} = req.user;
-    const {data} = req.body;
+    const {date} = req.body;
 
-    const userFind = await Diary.findOne({data, owner});
+    const userFind = await Diary.findOne({date, owner});
     if(!userFind){
         throw HttpError(404)
     }
-
-
-    const resultExercises = await Diary.find().populate("exerciseId");
+   else {
+       const resultExercises = await Diary.find({date, owner}).populate("exercises.exerciseId", "bodyPart equipment name target");
   
-    const resultProducts = await Diary.find().populate("productId");
-    
+       const resultProducts =  await Diary.find({date, owner}).populate("products.productId", "weight category title groupBloodNotAllowed");
 
-   const infoUserProdactsExercises = {
-       exercises: [...resultExercises],
-       products: [...resultProducts]
+       const infoUserProdactsExercises = {...resultExercises,...resultProducts};
+   res.status(201).json(infoUserProdactsExercises);
 }
-res.status(201).json(infoUserProdactsExercises);
 };
 
 module.exports = ctrlWrapper(getDiary);
