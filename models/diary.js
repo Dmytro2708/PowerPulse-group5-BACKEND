@@ -4,47 +4,52 @@ const handleMongooseError = require('../helpers/hendleMongooseError');
 
 const createDairyExerciseSchema = Joi.object({
     exerciseId: Joi.string().required(), 
-    date: Joi.string().regex(/^[0-3][0-9\/[0-1][0-9]\/\d{4}$/).required(), 
+    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
     time: Joi.number().min(1).required(),
     calories:Joi.number().min(1).required(),
     
 })
 
 const deleteDiaryExerciseSchema = Joi.object({
-	id: Joi.string().required(),
-    date: Joi.string().regex(/^[0-3][0-9\/[0-1][0-9]\/\d{4}$/).required(), 
+	  exerciseId: Joi.string().required(),
+    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
 })
 
 const createDairyProductSchema = Joi.object({
     productId: Joi.string().required(), 
-    date: Joi.string().regex(/^[0-3][0-9\/[0-1][0-9]\/\d{4}$/).required(), 
+    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
     amount: Joi.number().min(1).required(),
     calories:Joi.number().min(1).required(),
     
 })
 
 const deleteDairyProductSchema = Joi.object({
-    id: Joi.string().required(),
-    date: Joi.string().regex(/^[0-3][0-9\/[0-1][0-9]\/\d{4}$/).required(), 
+    productId: Joi.string().required(),
+    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
+  });
+
+  const getDairySchema = Joi.object({
+    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
   });
   
   const schemasDiary = {
     createDairyExerciseSchema,
     deleteDiaryExerciseSchema,
     createDairyProductSchema,
-    deleteDairyProductSchema
+    deleteDairyProductSchema,
+    getDairySchema
   };
 
 
 const diarySchema= new Schema({
 
     exerciseId: {
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'exercise',
    },
 
     productId: {
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'product',
    },
 
@@ -60,8 +65,6 @@ const diarySchema= new Schema({
 
     calories: {
         type: Number,
-        required: [true, 'Calories is required'],
-        default:0,
     },
 
     time: {
@@ -72,10 +75,14 @@ const diarySchema= new Schema({
         type: Number,
         min: 1,
       },
+    
+    amountAll: {
+      type: Number,
+      min: 1,
+    },
 
     burnedCalories: {
         type: Number,
-          required: true,
           default: 0,
          },
 
@@ -95,7 +102,6 @@ const diarySchema= new Schema({
               },
               amount: {
                 type: Number,
-                type: String,
               },
             },
           ],

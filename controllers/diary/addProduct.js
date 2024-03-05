@@ -3,12 +3,14 @@ const { Diary } = require("../../models/diary");
 
 const addProduct = async (req, res) => {
     const { _id: owner } = req.user;
+    
     const {
         productId,
         date,
         calories,
         amount,
       } = req.body;
+
 
       const newProduct = {
         productId,
@@ -22,18 +24,20 @@ const addProduct = async (req, res) => {
        const newProductDiary=await Diary.create({
             owner,
             date,
-            burnedCalories,
+            burnedCalories: calories,
+            amountAll: amount,
             products: [newProduct]
         });
         res.status(201).json(newProductDiary);
       }
       else{
-        upDateProduct = await Diary.findByIdAndUpdate(
-            _id,
+        upDateProduct = await Diary.findOneAndUpdate(
+          productId,
             {
-              $inc: { burnedCalories: +calories, amount: +amount }, 
+              $inc: { burnedCalories: +calories, amountAll: +amount }, 
               $push: { products: { productId, amount, calories } }, 
-            }
+            },
+            {new: true}
           );
           res.status(200).json(upDateProduct);
       }
