@@ -9,7 +9,7 @@ const {
 
 const { authenticate } = require("../middlewares");
 
-router.get("/", authenticate, getProductsCategories);
+router.get("/categories", authenticate, getProductsCategories);
 
-router.get("/filters", authenticate, getProductsByBloodType);
+router.get("/", authenticate, getProductsByBloodType);
 module.exports = router;

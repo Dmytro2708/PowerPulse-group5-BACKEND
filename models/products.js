@@ -20,7 +20,7 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    groopBloodNotAllowed: {
+    groupBloodNotAllowed: {
       type: {
         1: Boolean,
         2: Boolean,
