@@ -18,7 +18,7 @@ const deleteDiaryExerciseSchema = Joi.object({
 const createDairyProductSchema = Joi.object({
     productId: Joi.string().required(), 
     date: Joi.string().regex(/^[0-3][0-9\/[0-1][0-9]\/\d{4}$/).required(), 
-    amount: Joi.number().min(1).regex(/^(\d+)g$/).required(),
+    amount: Joi.number().min(1).required(),
     calories:Joi.number().min(1).required(),
     
 })
@@ -76,11 +76,44 @@ const diarySchema= new Schema({
     burnedCalories: {
         type: Number,
           required: true,
+          default: 0,
          },
 
     ExercisesTime: {
             type: Number,
+            default: 0
           },
+
+    products: [
+            {
+             productId: {
+                type: String,
+                ref: 'product',
+               },
+              calories: {
+                type: Number,
+              },
+              amount: {
+                type: Number,
+                type: String,
+              },
+            },
+          ],
+
+    exercises: [
+            {            
+             exerciseId: {
+                type: String,
+                ref: 'exercise',
+               },
+             calories: {
+                    type: Number,
+                  },
+              time: {
+                type: Number,
+              },
+            },
+          ],
 
 },{versionKey:false, timestamps:true}) 
 

@@ -9,15 +9,15 @@ const { schemasDiary } = require("../models/diary");
 const diaryRouter = express.Router();
 
 
-diaryRouter.post('/addproduct', (schemasDiary.createDairyProductSchema), addProduct);
 
-diaryRouter.delete('/deleteproduct', deleteProduct);
+diaryRouter.post('/addproduct', validateBody(schemasDiary.createDairyProductSchema), addProduct);
 
-diaryRouter.post('/addexercise', (schemasDiary.createDairyExerciseSchema), addExercise);
+diaryRouter.delete('/deleteproduct',validateBody(schemasDiary.deleteDairyProductSchema), deleteProduct);
 
-diaryRouter.delete('/deleteexersise', deleteExercise);
+diaryRouter.post('/addexercise', validateBody(schemasDiary.createDairyExerciseSchema), addExercise);
+
+diaryRouter.delete('/deleteexersise',validateBody(schemasDiary.deleteDiaryExerciseSchema), deleteExercise);
 
 diaryRouter.get('/', getDiary);
-
 
 module.exports = diaryRouter;
