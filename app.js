@@ -9,6 +9,8 @@ const app = express();
 const authRouter = require("./routes/auth");
 const productsRouter = require("./routes/products");
 const exercisesRouter = require("./routes/exercises");
+const filtersRouter = require("./routes/filters");
+
 app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
@@ -17,6 +19,7 @@ app.use(express.static("public"));
 app.use("/api/users", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/exercises", exercisesRouter);
+app.use("/api/filter", filtersRouter);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });
