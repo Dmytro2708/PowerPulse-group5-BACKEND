@@ -2,24 +2,24 @@ const { ctrlWrapper, HttpError} = require("../../helpers");
 const { Diary } = require("../../models/diary");
 
 const deleteProduct = async (req, res) => {
-const {productId, data} = req.query;
+const {productId, date} = req.body;
 const {_id: owner} = req.user;
 
-const userFind = await Diary.findOne({owner, data});
+const userFind = await Diary.findOne({ date, owner });
 
 if(!userFind){
    throw HttpError(404)
 }
 
-const product = userFind.products.find(product=>product._id===productId);
+const product = userFind.products.find(product=>product.productId===productId);
 
 if(!product){
     throw HttpError(404)
 }
 else{
-    await Diary.findByIdAndDelete(_id, {
-        $inc: { burnedCalories: -products.calories, amount: -amount },
-        $pull: { products: { _id: productId } },
+    await Diary.findOneAndDelete(productId, {
+        $inc: { burnedCalories: -userFind.products.calories, amountAll: -userFind.products.amount },
+        $pull: { products: { productId: productId } },
     });
 
     res.status(200).json({message: "Product delete"})

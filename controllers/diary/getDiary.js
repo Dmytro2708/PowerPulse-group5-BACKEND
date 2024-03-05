@@ -5,22 +5,20 @@ const {Product} = require("../../models/products");
 
 const getDiary = async (req, res) => {
     const {_id: owner} = req.user;
-    const {data} = req.query;
+    const {data} = req.body;
 
-    userFind = await Diary.findOne({data, owner});
+    const userFind = await Diary.findOne({data, owner});
     if(!userFind){
         throw HttpError(404)
     }
 
 
-    resultExercises = await Diary.find().populate("exercises.exerciseId", "bodyPart equipment name target burnedCalories time" );
-    resultProducts = await Diary.find().populate("products.productId", "weight calories category title");
+    const resultExercises = await Diary.find().populate("exerciseId");
+  
+    const resultProducts = await Diary.find().populate("productId");
+    
 
-    infoUserProdactsExercises = {
-       owner: userFind.owner,
-       data: userFind.data,
-       burnedCalories: userFind.burnedCalories,
-       ExercisesTime: userFind.ExercisesTime,
+   const infoUserProdactsExercises = {
        exercises: [...resultExercises],
        products: [...resultProducts]
 }

@@ -6,6 +6,7 @@ const Product = require("../../models/products");
 
 const productsPath = path.resolve(__dirname, "../../productsCategories.json");
 
+
 const getProductsCategories = async (req, res) => {
   const products = await fs.readFile(productsPath, "utf8");
   if (!products) {
@@ -13,6 +14,7 @@ const getProductsCategories = async (req, res) => {
   }
   const productList = JSON.parse(products);
   res.json(productList);
+
 };
 
 const getProductsByBloodType = async (req, res) => {
