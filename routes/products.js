@@ -5,7 +5,7 @@ const router = express.Router();
 const {
   getProductsCategories,
   getProductsByBloodType,
-} = require("../controllers/auth/products");
+} = require("../controllers/products");
 
 const { authenticate } = require("../middlewares");
 

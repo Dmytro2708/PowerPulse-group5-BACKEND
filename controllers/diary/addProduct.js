@@ -32,7 +32,7 @@ const addProduct = async (req, res) => {
       }
       else{
         upDateProduct = await Diary.findOneAndUpdate(
-          productId,
+          { date, owner },
             {
               $inc: { burnedCalories: +calories, amountAll: +amount }, 
               $push: { products: { productId, amount, calories } }, 
