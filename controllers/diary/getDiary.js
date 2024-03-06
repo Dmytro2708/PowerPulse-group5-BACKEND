@@ -12,18 +12,16 @@ const getDiary = async (req, res) => {
     throw HttpError(404);
   } else {
     const resultExercises = await Diary.find({ date, owner })
-      .populate({
-        path: "exercises.exerciseId",
-        select: "bodyPart equipment name target",
-      })
-      .exec();
+      .populate(
+         "exercises.exerciseId",
+         "bodyPart equipment name target",
+      );
 
     const resultProducts = await Diary.find({ date, owner })
       .populate(
         "products.productId",
         "weight category title groupBloodNotAllowed"
-      )
-      .exec();
+      );
 
     const infoUserProdactsExercises = {
       exercises: resultExercises,
