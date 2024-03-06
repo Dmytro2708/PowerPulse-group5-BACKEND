@@ -1,7 +1,7 @@
 {
     "openapi": "3.1.0",
     "info": {
-      "version": "1.0.1",
+      "version": "1.0.2",
       "title": "PowerPulse-group5",
       "description": "Showing off swagger-ui-express",
       "license": {
@@ -315,6 +315,96 @@
 					}					
 				}
 			}
+		},
+		"/api/exercises/": {
+			"get": {
+				"tags": ["Exercises"],
+				"summary": "Get all exercises",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"requestBody": {},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+						  "application/json": {
+							 "schema": {
+								"$ref": "#/components/schemas/ExercisesResponse"
+							 }
+						  }
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
+						}
+					},
+					"404": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
+						}
+					}
+				}
+			}	
+		},
+		"/api/exercises/{:filter}": {
+			"get": {
+				"tags": ["Exercises"],
+				"summary": "Get exercises by type",
+				"parameters": [
+					{
+						"in": "path",
+						"name": ":filter",
+						"required": true,
+						"type": "string",
+						"description":	"Exercise filter"
+					}
+				],
+				"security": [{ "Bearer": [] }],
+				"requestBody": {},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+						  "application/json": {
+							 "schema": {
+								"$ref": "#/components/schemas/ExercisesFilterResponse"
+							 }
+						  }
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
+						}
+					},
+					"404": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
+						}
+					}
+				}
+			}	
 		}
     },
 
@@ -360,11 +450,11 @@
 			},
 			"LogoutRequest": {
 				"type": "object",
-				"required": ["_id"],
+				"required": ["token"],
 				"properties": {
-					"_id": {
+					"token": {
 						"type": "string",
-						"description": "User id"
+						"description": "User token"
 					}
 				}
 			},
@@ -647,6 +737,50 @@
 				}
 			},
 
+			"ExercisesResponse": {
+				"type": "array",
+				"description": "Array with objects ",
+				"items": {
+					"type": "object",
+					"properties": {
+						"_id": {
+							"type": "string",
+							"description": "Exercise id"
+						},
+						"bodyPart": {
+							"type": "string",
+							"description": "Affected body part"
+						},
+						"equipment": {
+							"type": "string",
+							"description": "Necessary equipment"
+						},
+						"gifUrl": {
+							"type": "string",
+							"description": "URL to the example gif"
+						},
+						"name": {
+							"type": "string",
+							"description": "Exercise name"
+						},
+						"target": {
+							"type": "string",
+							"description": "Aim of exercise"
+						},
+						"burnedCalories": {
+							"type": "number",
+							"description": "Burns calories"
+						},
+						"time": {
+							"type": "number",
+							"description": "Time of the exercise"
+						}
+					}
+				}				
+			},
+
+
+
 
 
 
@@ -741,47 +875,19 @@
 					}					
 				}
 			},
-			"ExercisesResponse": {
-				"type": "array",
-				"description": "Array with objects ",
-				"items": {
-					"type": "object",
-					"properties": {
-						"_id": {
-							"type": "string",
-							"description": "Exercise id"
-						},
-						"bodyPart": {
-							"type": "string",
-							"description": "Affected body part"
-						},
-						"equipment": {
-							"type": "string",
-							"description": "Necessary equipment"
-						},
-						"gifUrl": {
-							"type": "string",
-							"description": "URL to the example gif"
-						},
-						"name": {
-							"type": "string",
-							"description": "Exercise name"
-						},
-						"target": {
-							"type": "string",
-							"description": "Aim of exercise"
-						},
-						"burnedCalories": {
-							"type": "number",
-							"description": "Burns calories"
-						},
-						"time": {
-							"type": "number",
-							"description": "Time of the exercise"
-						}
-					}
-				}				
-			},
+
+
+
+
+			
+
+
+
+
+
+
+
+
 			"ExercisesBodyPartsResponse": {
 				"type": "array",
 				"description": "Array with objects ",
@@ -807,7 +913,7 @@
 					}
 				}	
 			},
-			"ExercisesMusclesResponse": {
+			"ExercisesFilterResponse": {
 				"type": "array",
 				"description": "Array with objects ",
 				"items": {
