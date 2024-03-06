@@ -18,7 +18,7 @@ if(!product){
 }
 else{
     await Diary.findOneAndDelete(productId, {
-        $inc: { burnedCalories: -userFind.products.calories, amountAll: -userFind.products.amount },
+        $inc: { Calories: -userFind.products.calories, amountAll: -userFind.products.amount },
         $pull: { products: { productId: productId } },
     });
 
