@@ -3,9 +3,12 @@ const { HttpError, ctrlWrapper } = require("../../helpers");
 
 const logout = async (req, res) => {
   const { _id } = req.user;
-  await User.findByIdAndUpdate(_id, { token: "" });
+  const result = await User.findByIdAndUpdate(_id, { token: '' });
 
-  res.json({ message: "Logout success" });
+  if (!result) {
+    throw HttpError(404, 'Not found');
+  }
+  res.status(200).json({ message: "Logout success" });
 };
 
 module.exports = ctrlWrapper(logout);

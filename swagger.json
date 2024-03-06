@@ -31,11 +31,11 @@
         }
     ],
     "paths": {
-        "/api/auth/register": {
+        "/api/users/register": {
 			"post": {
 				"tags": ["Auth"],
 				"summary": "User registration",
-				"paramrters": [],
+				"parameters": [],
 				"requestBody": {
 					"description": "Registration's object",
 					"required": true,
@@ -81,11 +81,11 @@
 				}
 			}
 		},
-		"/api/auth/login": {
+		"/api/users/login": {
 			"post": {
 				"tags": ["Auth"],
 				"summary": "User login",
-				"paramrters": [],
+				"parameters": [],
 				"requestBody": {
 					"description": "Login object",
 					"required": true,
@@ -121,11 +121,11 @@
 				}
 			}	
 		},
-		"/api/auth/current": {
+		"/api/users/current": {
 			"get": {
 				"tags": ["Auth"],
 				"summary": "Current user",
-				"paramrters": [],
+				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {},
 				"responses": {
@@ -151,25 +151,12 @@
 					}
 				}
 			}	
-		},
-
-
-
-
-
-
-
-
-
-
-
-
-        
-		"/api/auth/logout": {
+		},        
+		"/api/users/logout": {
 			"post": {
 				"tags": ["Auth"],
 				"summary": "User logout",
-				"paramrters": [],
+				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {
 					"description": "Logout object",
@@ -183,7 +170,7 @@
 					}
 				},
 				"responses": {
-					"204": {
+					"200": {
 						"description": "No Content",
 						"content": {
 						  "application/json": {
@@ -202,21 +189,31 @@
 								}
 							 }
 						}
+					},
+					"401": {
+						"description": "Not authorized",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
+						}
 					}
 				}
 			}
 		},
-		"/api/auth/avatars": {
+		"/api/users/avatars": {
 			"patch": {
 				"tags": ["Auth"],
 				"summary": "Update user avatar",
-				"paramrters": [],
+				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {
 					"description": "Update avatar object",
 					"required": true,
 					"content": {
-						"application/json": {
+						"multipart/form-data": {
 							"schema": {
 								"$ref": "#/components/schemas/AvatarsRequest"
 							}
@@ -237,19 +234,19 @@
 				}
 			}
 		},
-        "/api/auth/": {
+        "/api/users/": {
 			"patch": {
 				"tags": ["Auth"],
-				"summary": "Update user avatar",
-				"paramrters": [],
+				"summary": "Add user data",
+				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {
-					"description": "Update avatar object",
+					"description": "Add user data",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/AvatarsRequest"
+								"$ref": "#/components/schemas/AddUserDataRequest"
 							}
 						}
 					}
@@ -260,27 +257,37 @@
 						"content": {
 						  "application/json": {
 							 "schema": {
-								"$ref": "#/components/schemas/AvatarsResponse"
+								"$ref": "#/components/schemas/AddUserDataResponse"
 							 }
 						  }
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
 						}
 					}					
 				}
 			}
 		},
-        "/api/auth/params": {
+        "/api/users/params": {
 			"patch": {
 				"tags": ["Auth"],
-				"summary": "Update user avatar",
-				"paramrters": [],
+				"summary": "Add user data",
+				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {
-					"description": "Update avatar object",
+					"description": "Add user data",
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/AvatarsRequest"
+								"$ref": "#/components/schemas/GetUserParamsRequest"
 							}
 						}
 					}
@@ -291,15 +298,28 @@
 						"content": {
 						  "application/json": {
 							 "schema": {
-								"$ref": "#/components/schemas/AvatarsResponse"
+								"$ref": "#/components/schemas/GetUserParamsResponse"
 							 }
 						  }
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
 						}
 					}					
 				}
 			}
 		}
     },
+
+
+
     "components": {
 		"schemas": {
 			"RegistrationRequest": {
@@ -321,29 +341,7 @@
 						"example": "qwerty123"
 					}
 				}
-			},
-			"RegistrationResponse": {
-				"type": "object",
-				"properties": {
-					"user": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string",
-								"description": "User name"
-							},
-							"email": {
-								"type": "string",
-								"description": "User email"
-							}
-						}	
-					},
-					"token": {
-						"type": "string",
-						"descroption": "Message"
-					} 
-				}
-			},
+			},			
 			"LoginRequest": {
 				"type": "object",
 				"required": ["email", "password"],
@@ -372,18 +370,292 @@
 			},
 			"AvatarsRequest": {
 				"type": "object",
-				"required": ["_id", "avatarURL"],
+				"required": ["avatarURL"],
 				"properties": {
-					"_id": {
-						"type": "string",
-						"description": "User id"
-					},
 					"avatarURL": {
 						"type": "string",
 						"description": "New avatar URL"
 					}
 				}
 			},
+			"AddUserDataRequest": {
+				"type": "object",
+				"required": ["height", "currentWeight", "desiredWeight", "birthday", "blood", "sex", "levelActivity"],
+				"properties": {
+					"height": {
+						"type": "number",
+						"description": "User height"
+					},
+					"currentWeight": {
+						"type": "number",
+						"description": "User current Weight"
+					},
+					"desiredWeight": {
+						"type": "number",
+						"description": "User desired Weight"
+					},
+					"birthday": {
+						"type": "date",
+						"description": "User Date birthday"
+					},
+					"blood": {
+						"type": "number",
+						"description": "User blood group"
+					},
+					"sex": {
+						"type": "string",
+						"description": "User sex"
+					},
+					"levelActivity": {
+						"type": "number",
+						"description": "User level Activity"
+					}
+				}
+			},
+			"GetUserParamsRequest": {
+				"type": "object",
+				"required": ["name", "height", "currentWeight", "desiredWeight", "birthday", "blood", "sex", "levelActivity"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "User name"
+					},
+					"height": {
+						"type": "number",
+						"description": "User height"
+					},
+					"currentWeight": {
+						"type": "number",
+						"description": "User current Weight"
+					},
+					"desiredWeight": {
+						"type": "number",
+						"description": "User desired Weight"
+					},
+					"birthday": {
+						"type": "date",
+						"description": "User Date birthday"
+					},
+					"blood": {
+						"type": "number",
+						"description": "User blood group"
+					},
+					"sex": {
+						"type": "string",
+						"description": "User sex"
+					},
+					"levelActivity": {
+						"type": "number",
+						"description": "User level Activity"
+					}
+				}
+			},
+			"RegistrationResponse": {
+				"type": "object",
+				"properties": {
+					"user": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "User name"
+							},
+							"email": {
+								"type": "string",
+								"description": "User email"
+							}
+						}	
+					},
+					"token": {
+						"type": "string",
+						"descroption": "Message"
+					} 
+				}
+			},
+			"LoginResponse": {
+				"type": "object",
+				"properties": {
+					"user": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "User name"
+							},
+							"email": {
+								"type": "string",
+								"description": "User email"
+							}
+						}	
+					},
+                    "token": {
+						"type": "string",
+						"description": "User token"
+					}					 
+				}
+			},
+			"CurrentResponse": {
+				"type": "object",
+				"required": ["name", "email"],
+				"properties": {
+					"user": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string",
+								"description": "User name"
+							},
+							"email": {
+								"type": "string",
+								"description": "User email"
+							}
+						}	
+					}
+				}
+			},
+			"LogoutResponse": {
+				"type": "object",
+				"properties": {
+					"message": {
+						"type": "string",
+						"descroption": "Message",
+						"example": "Logout success"
+					}
+				}
+			},
+			"AvatarsResponse": {
+				"type": "object",
+				"properties": {
+					"avatarURL": {
+						"type": "string",
+						"descroption": "New avatar URL"
+					}
+				}
+			},
+			"AddUserDataResponse": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"descroption": "User id"
+					},
+					"name": {
+						"type": "string",
+						"descroption": "User name"
+					},
+					"email": {
+						"type": "string",
+						"descroption": "User email"
+					},
+					"password": {
+						"type": "string",
+						"descroption": "User password"
+					},
+					"height": {
+						"type": "number",
+						"description": "User height"
+					},
+					"currentWeight": {
+						"type": "number",
+						"description": "User current Weight"
+					},
+					"desiredWeight": {
+						"type": "number",
+						"description": "User desired Weight"
+					},
+					"birthday": {
+						"type": "date",
+						"description": "User Date birthday"
+					},
+					"blood": {
+						"type": "number",
+						"description": "User blood group"
+					},
+					"sex": {
+						"type": "string",
+						"description": "User sex"
+					},
+					"levelActivity": {
+						"type": "number",
+						"description": "User level Activity"
+					},
+					"token": {
+						"type": "string",
+						"descroption": "User token"
+					},
+					"bmr": {
+						"type": "number",
+						"descroption": "User bmr"
+					}
+				}
+			},
+			"GetUserParamsResponse": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string",
+						"descroption": "User id"
+					},
+					"name": {
+						"type": "string",
+						"descroption": "User name"
+					},
+					"email": {
+						"type": "string",
+						"descroption": "User email"
+					},
+					"password": {
+						"type": "string",
+						"descroption": "User password"
+					},
+					"height": {
+						"type": "number",
+						"description": "User height"
+					},
+					"currentWeight": {
+						"type": "number",
+						"description": "User current Weight"
+					},
+					"desiredWeight": {
+						"type": "number",
+						"description": "User desired Weight"
+					},
+					"birthday": {
+						"type": "date",
+						"description": "User Date birthday"
+					},
+					"blood": {
+						"type": "number",
+						"description": "User blood group"
+					},
+					"sex": {
+						"type": "string",
+						"description": "User sex"
+					},
+					"levelActivity": {
+						"type": "number",
+						"description": "User level Activity"
+					},
+					"token": {
+						"type": "string",
+						"descroption": "User token"
+					},
+					"bmr": {
+						"type": "number",
+						"descroption": "User bmr"
+					}
+				}
+			},
+
+
+
+
+
+
+
+
+
+
 			"DiaryAddProductsRequest": {
 				"type": "object",
 				"required": ["productId", "date", "calories", "category", "recommended", "title", "amount"],
@@ -467,75 +739,6 @@
 						"description": "Aded products date",
 						"example": "DD/MM/YYYY"
 					}					
-				}
-			},			
-			"LoginResponse": {
-				"type": "object",
-				"properties": {
-					"user": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string",
-								"description": "User name"
-							},
-							"email": {
-								"type": "string",
-								"description": "User email"
-							}
-						}	
-					},
-                    "token": {
-						"type": "string",
-						"description": "User token"
-					}					 
-				}
-			},
-			"CurrentResponse": {
-				"type": "object",
-				"required": ["name", "email"],
-				"properties": {
-					"user": {
-						"type": "object",
-						"properties": {
-							"name": {
-								"type": "string",
-								"description": "User name"
-							},
-							"email": {
-								"type": "string",
-								"description": "User email"
-							}
-						}	
-					}
-				}
-			},
-			"LogoutResponse": {
-				"type": "object",
-				"properties": {
-					"message": {
-						"type": "string",
-						"descroption": "Message",
-						"example": "logout was successfull"
-					}
-				}
-			},
-			"AvatarsResponse": {
-				"type": "object",
-				"properties": {
-					"avatarURL": {
-						"type": "string",
-						"descroption": "New avatar URL"
-					}
-				}
-			},
-			"VerifyEmailResponse": {
-				"type": "object",
-				"properties": {
-					"message": {
-						"type": "string",
-						"descroption": "Message"
-					}
 				}
 			},
 			"ExercisesResponse": {
@@ -744,6 +947,8 @@
 					}
 				}	
 			},
+
+
 			"ErrorResponse": {
 				"type": "object",
 				"properties": {
