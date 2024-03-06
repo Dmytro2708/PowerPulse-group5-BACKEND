@@ -11,13 +11,15 @@ const getDiary = async (req, res) => {
   if (!userFind) {
     throw HttpError(404);
   } else {
-    const resultExercises = await Diary.find({ date, owner })
+   
+    const resultExercises = await Diary.find({ date, owner }, '-products')
       .populate(
          "exercises.exerciseId",
          "bodyPart equipment name target",
       );
 
-    const resultProducts = await Diary.find({ date, owner })
+
+    const resultProducts = await Diary.find({ date, owner }, '-exercises' )
       .populate(
         "products.productId",
         "weight category title groupBloodNotAllowed"
