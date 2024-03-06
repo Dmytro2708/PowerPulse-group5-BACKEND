@@ -81,6 +81,11 @@ const diarySchema= new Schema({
       min: 1,
     },
 
+    Calories: {
+          type: Number,
+            default: 0,
+           },
+
     burnedCalories: {
         type: Number,
           default: 0,

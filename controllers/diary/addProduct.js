@@ -24,17 +24,18 @@ const addProduct = async (req, res) => {
        const newProductDiary=await Diary.create({
             owner,
             date,
-            burnedCalories: calories,
+            Calories: calories,
             amountAll: amount,
             products: [newProduct]
         });
         res.status(201).json(newProductDiary);
       }
       else{
+
         upDateProduct = await Diary.findOneAndUpdate(
           { date, owner },
             {
-              $inc: { burnedCalories: +calories, amountAll: +amount }, 
+              $inc: { Calories: +calories, amountAll: +amount }, 
               $push: { products: { productId, amount, calories } }, 
             },
             {new: true}

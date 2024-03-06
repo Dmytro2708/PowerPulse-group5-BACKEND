@@ -12,14 +12,14 @@ const getDiary = async (req, res) => {
     throw HttpError(404);
   } else {
    
-    const resultExercises = await Diary.find({ date, owner }, '-products')
+    const resultExercises = await Diary.find({ date, owner }, '-products -amountAll -Calories')
       .populate(
          "exercises.exerciseId",
          "bodyPart equipment name target",
       );
 
 
-    const resultProducts = await Diary.find({ date, owner }, '-exercises' )
+    const resultProducts = await Diary.find({ date, owner }, '-exercises -burnedCalories -ExercisesTime' )
       .populate(
         "products.productId",
         "weight category title groupBloodNotAllowed"
