@@ -2,10 +2,11 @@ const { ctrlWrapper, HttpError} = require("../../helpers");
 const { Diary } = require("../../models/diary");
 
 const deleteExercise = async (req, res) => {
-const {exerciseId, data} = req.body;
+const {exerciseId, date} = req.body;
 const {_id: owner} = req.user;
 
-const userFind = await Diary.findOne({owner, data});
+const userFind = await Diary.findOne({owner, date});
+console.log(userFind)
 
 if(!userFind){
    throw HttpError(404)
