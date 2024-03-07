@@ -22,7 +22,6 @@ app.use(express.static("public"));
 app.use("/api/users", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/exercises", exercisesRouter);
-app.use("/api/filter", filtersRouter);
 app.use("/api/diary", diaryRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

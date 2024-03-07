@@ -10,14 +10,14 @@ const diaryRouter = express.Router();
 
 
 
-diaryRouter.post('/addproduct', authenticate, validateBody(schemasDiary.createDairyProductSchema), addProduct);
+diaryRouter.post('/diary/product', authenticate, validateBody(schemasDiary.createDairyProductSchema), addProduct);
 
-diaryRouter.delete('/deleteproduct', authenticate, validateBody(schemasDiary.deleteDairyProductSchema), deleteProduct);
+diaryRouter.delete('/diary/product', authenticate, validateBody(schemasDiary.deleteDairyProductSchema), deleteProduct);
 
-diaryRouter.post('/addexercise', authenticate, validateBody(schemasDiary.createDairyExerciseSchema), addExercise);
+diaryRouter.post('/diary/exercise', authenticate, validateBody(schemasDiary.createDairyExerciseSchema), addExercise);
 
-diaryRouter.delete('/deleteexersise',authenticate, validateBody(schemasDiary.deleteDiaryExerciseSchema), deleteExercise);
+diaryRouter.delete('/diary/exersise',authenticate, validateBody(schemasDiary.deleteDiaryExerciseSchema), deleteExercise);
 
-diaryRouter.get('/', authenticate, validateBody(schemasDiary.getDairySchema), getDiary);
+diaryRouter.get('/diary', authenticate, validateBody(schemasDiary.getDairySchema), getDiary);
 
 module.exports = diaryRouter;

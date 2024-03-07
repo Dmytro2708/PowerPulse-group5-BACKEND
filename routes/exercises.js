@@ -10,5 +10,5 @@ const {
 const { authenticate } = require("../middlewares");
 
 router.get("/", authenticate, getAllExercises);
-router.get("/", authenticate, getFiltersByType);
+router.get("/filters", authenticate, getFiltersByType);
 module.exports = router;
