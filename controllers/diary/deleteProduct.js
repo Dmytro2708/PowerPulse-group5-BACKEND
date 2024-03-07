@@ -13,15 +13,17 @@ if(!userFind){
 
 const product = userFind.products.find(product=>product.productId===productId);
 
+
 if(!product){
     throw HttpError(404)
 }
 else{
-    await Diary.findOneAndDelete(productId, {
-        $inc: { Calories: -userFind.products.calories, amountAll: -userFind.products.amount },
-        $pull: { products: { productId: productId } },
-    });
-
+    await Diary.findOneAndUpdate({ date, owner, productId}, {
+        $inc: { Calories: -product.calories, amountAll: -product.amount },
+        $pull: { product: { productId: productId } },
+    }, 
+    {new: true});
+    
     res.status(200).json({message: "Product delete"})
 }
 };
