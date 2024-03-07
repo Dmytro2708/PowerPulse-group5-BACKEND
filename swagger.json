@@ -256,7 +256,7 @@
 					}
 				},
 				"responses": {
-					"200": {
+					"201": {
 						"description": "OK",
 						"content": {
 						  "application/json": {
@@ -442,15 +442,6 @@
 				"parameters": [],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {
-					"description": " ",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ProductsByBloodTypeResponseRequest"
-							}
-						}
-					}
 				},
 				"responses": {
 					"200": {
@@ -903,6 +894,7 @@
 
 
 
+
 			"ProductsByBloodTypeResponse": {
 				"type": "array",
 				"description": "Array with objects ",
@@ -936,6 +928,9 @@
 					}
 				}				
 			},
+
+
+			
 			
 
 
