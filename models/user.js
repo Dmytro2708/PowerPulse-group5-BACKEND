@@ -99,7 +99,7 @@ const loginSchema = Joi.object({
 });
 
 const addUserDataSchema = Joi.object({
-  height: Joi.number().min(35).required().messages({
+  height: Joi.number().min(150).required().messages({
     'any.required': `Missing required height field`,
   }),
   currentWeight: Joi.number().min(35).required().messages({
@@ -123,7 +123,7 @@ const addUserDataSchema = Joi.object({
 });
 
 const addUserParamsSchema = Joi.object({
-  name: Joi.string(),
+  name: Joi.string().required(),
   height: Joi.number().min(35).required().messages({
     'any.required': `Missing required height field`,
   }),
