@@ -11,7 +11,6 @@ const app = express();
 const authRouter = require("./routes/auth");
 const productsRouter = require("./routes/products");
 const exercisesRouter = require("./routes/exercises");
-const filtersRouter = require("./routes/filters");
 const diaryRouter = require("./routes/diary");
 
 app.use(morgan("tiny"));
