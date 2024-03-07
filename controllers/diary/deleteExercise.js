@@ -6,7 +6,6 @@ const {exerciseId, date} = req.body;
 const {_id: owner} = req.user;
 
 const userFind = await Diary.findOne({owner, date});
-console.log(userFind)
 
 if(!userFind){
    throw HttpError(404)
