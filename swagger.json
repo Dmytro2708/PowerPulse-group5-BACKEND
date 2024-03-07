@@ -21,6 +21,10 @@
            "name": "Exercises",
            "description": "Exercises endpoints"
         },
+		{
+			"name": "Filters",
+			"description": "Exercises endpoints"
+		 },
         {
            "name": "Products",
            "description": "Products endpoints"
@@ -345,7 +349,7 @@
 						}
 					},
 					"404": {
-						"description": "Unauthorized",
+						"description": "Not Found",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -357,19 +361,11 @@
 				}
 			}	
 		},
-		"/api/exercises/{:filter}": {
+		"/api/filters/": {
 			"get": {
-				"tags": ["Exercises"],
+				"tags": ["Filters"],
 				"summary": "Get exercises by type",
-				"parameters": [
-					{
-						"in": "path",
-						"name": ":filter",
-						"required": true,
-						"type": "string",
-						"description":	"Exercise filter"
-					}
-				],
+				"parameters": [	],
 				"security": [{ "Bearer": [] }],
 				"requestBody": {},
 				"responses": {
@@ -378,7 +374,7 @@
 						"content": {
 						  "application/json": {
 							 "schema": {
-								"$ref": "#/components/schemas/ExercisesFilterResponse"
+								"$ref": "#/components/schemas/FilterResponse"
 							 }
 						  }
 						}
@@ -394,7 +390,91 @@
 						}
 					},
 					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
+						}
+					}
+				}
+			}	
+		},
+		"/api/products/categories": {
+			"get": {
+				"tags": ["Products"],
+				"summary": "Get all categories products",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"requestBody": {},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+						  "application/json": {
+							 "schema": {
+								"$ref": "#/components/schemas/CategoriesProductsResponse"
+							 }
+						  }
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
+						}
+					}
+				}
+			}	
+		},
+
+
+		"/api/products/": {
+			"get": {
+				"tags": ["Products"],
+				"summary": "Get all exercises",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"requestBody": {
+					"description": " ",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductsByBloodTypeResponseRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+						  "application/json": {
+							 "schema": {
+								"$ref": "#/components/schemas/ProductsByBloodTypeResponse"
+							 }
+						  }
+						}
+					},
+					"401": {
 						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							 }
+						}
+					},
+					"404": {
+						"description": "Not Found",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -406,6 +486,10 @@
 				}
 			}	
 		}
+		
+
+
+
     },
 
 
@@ -540,6 +624,12 @@
 					}
 				}
 			},
+
+			"ProductsByBloodTypeResponseRequest": {
+
+			},
+
+
 			"RegistrationResponse": {
 				"type": "object",
 				"properties": {
@@ -778,6 +868,75 @@
 					}
 				}				
 			},
+			"FilterResponse": {
+				"type": "array",
+				"description": "Array with objects ",
+				"items": {
+					"type": "object",
+					"properties": {
+						"_id": {
+							"type": "string",
+							"description": "item id"
+						},
+						"filter": {
+							"type": "string",
+							"description": "Filter by item"
+						},
+						"name": {
+							"type": "string",
+							"description": "item name"
+						},
+						"imgURL": {
+							"type": "string",
+							"description": "Image URL"
+						}
+					}
+				}
+			},
+			"CategoriesProductsResponse": {
+				"type": "array",
+				"description": "Array with Categories Products",
+				"properties": {
+					}		
+			},
+
+
+
+
+			"ProductsByBloodTypeResponse": {
+				"type": "array",
+				"description": "Array with objects ",
+				"items": {
+					"type": "object",
+					"properties": {
+						"": {
+							"type": "string",
+							"description": " "
+						},
+						"": {
+							"type": "string",
+							"description": "  "
+						},
+						"": {
+							"type": "string",
+							"description": " "
+						},
+						"": {
+							"type": "string",
+							"description": " "
+						},
+						"": {
+							"type": "string",
+							"description": " "
+						},
+						"": {
+							"type": "string",
+							"description": " "
+						}
+					}
+				}				
+			},
+			
 
 
 
@@ -873,94 +1032,6 @@
 						"description": "Aded products date",
 						"example": "DD/MM/YYYY"
 					}					
-				}
-			},
-
-
-
-
-			
-
-
-
-
-
-
-
-
-			"ExercisesBodyPartsResponse": {
-				"type": "array",
-				"description": "Array with objects ",
-				"items": {
-					"type": "object",
-					"properties": {
-						"_id": {
-							"type": "string",
-							"description": "Body part id"
-						},
-						"filter": {
-							"type": "string",
-							"description": "Filter by body parts"
-						},
-						"name": {
-							"type": "string",
-							"description": "Body part name"
-						},
-						"imgURL": {
-							"type": "string",
-							"description": "Image URL"
-						}
-					}
-				}	
-			},
-			"ExercisesFilterResponse": {
-				"type": "array",
-				"description": "Array with objects ",
-				"items": {
-					"type": "object",
-					"properties": {
-						"_id": {
-							"type": "string",
-							"description": "Muscle id"
-						},
-						"filter": {
-							"type": "string",
-							"description": "Filter by muscles"
-						},
-						"name": {
-							"type": "string",
-							"description": "Muscle name"
-						},
-						"imgURL": {
-							"type": "string",
-							"description": "Image URL"
-						}
-					}
-				}
-			},
-			"ExercisesEquipmentsResponse": {
-				"type": "array",
-				"description": "Array with objects ",
-				"items": {
-					"type": "object",
-					"properties": {
-						"_id": {
-							"type": "string",
-							"description": "MuscleEquipment id"
-						},
-						"filter": {
-							"type": "string",
-							"description": "Filter by equipment"
-						},
-						"name": {
-							"type": "string",
-							"description": "Equipment name"
-						},
-						"imgURL": {
-							"type": "string",
-							"description": "Image URL"
-						}
-					}
 				}
 			},
 			"DiaryAddProductsResponse": {
