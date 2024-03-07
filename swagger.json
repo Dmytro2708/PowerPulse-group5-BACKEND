@@ -433,8 +433,6 @@
 				}
 			}	
 		},
-
-
 		"/api/products/": {
 			"get": {
 				"tags": ["Products"],
@@ -476,6 +474,61 @@
 					}
 				}
 			}	
+		},
+
+
+
+
+		"/diary/addproduct": {
+			"post": {
+				"tags": ["Diary"],
+				"summary": "Add products",
+				"parameters": [],
+				"security": [{ "Bearer": [] }],
+				"requestBody": {
+					"description": "Add product by id",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DiaryAddProductsRequest"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created newProductDiary",
+						"content": {
+						  "application/json": {
+							 "schema": {
+								"$ref": "#/components/schemas/DiaryAddProductsResponse"
+							 }
+						   }
+						}
+					},
+					"200": {
+						"description": "OK",
+						"content": {
+						  "application/json": {
+							 "schema": {
+								"$ref": "#/components/schemas/DiaryAddProductsResponse"
+							 }
+						   }
+						}
+					},
+					"500": {
+						"description": "Server error",
+						"content": {
+							"application/json": {
+								"schema": {
+								  "$ref": "#/components/schemas/ErrorResponse"
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		
 
@@ -617,8 +670,38 @@
 			},
 
 			"ProductsByBloodTypeResponseRequest": {
-
 			},
+			
+			"DiaryAddProductsRequest": {
+				"type": "object",
+				"required": ["productId", "date", "amount", "calories"],
+				"properties": {
+					"productId": {
+						"type": "string",
+						"description": "Product id"
+					},
+					"date": {
+						"type": "string",
+						"description": "Date added product",
+						"example": "DD/MM/YYYY"
+					},
+					"amount": {
+						"type": "number",
+						"description": "Number of grams",
+						"example": "100"
+					},
+					"calories": {
+						"type": "number",
+						"description": "Number of calories"
+					}			
+				}
+			},
+
+
+
+
+
+
 
 
 			"RegistrationResponse": {
@@ -893,8 +976,6 @@
 
 
 
-
-
 			"ProductsByBloodTypeResponse": {
 				"type": "array",
 				"description": "Array with objects ",
@@ -931,6 +1012,47 @@
 
 
 			
+			"DiaryAddProductsResponse": {
+				"type": "object",
+				"properties": {
+					"owner": {
+						"type": "string",
+						"description": "Owner"
+					},
+					"date": {
+						"type": "string",
+						"description": "Add date",
+						"example": "dd/mm/yyyy"
+					},
+					"amountAll": {
+						"type": "number",
+						"description": "amountAll"
+					},
+					"calories": {
+						"type": "number",
+						"description": "Calories"
+					},
+
+
+
+					"productId": {
+						"type": "string",
+						"description": "Product id"
+					},
+					
+					"category": {
+						"type": "string",
+						"description": "Food category"
+					},
+					"recommended": {
+						"type": "boolean",
+						"description": "Recommended product"
+					}				
+				}
+			},
+ 
+			
+			
 			
 
 
@@ -940,46 +1062,6 @@
 
 
 
-
-
-
-
-			"DiaryAddProductsRequest": {
-				"type": "object",
-				"required": ["productId", "date", "calories", "category", "recommended", "title", "amount"],
-				"properties": {
-					"productId": {
-						"type": "string",
-						"description": "Product id"
-					},
-					"date": {
-						"type": "string",
-						"description": "Date added product",
-						"example": "DD/MM/YYYY"
-					},
-					"calories": {
-						"type": "number",
-						"description": "Number of calories"
-					},
-					"category": {
-						"type": "string",
-						"description": "Product category"
-					},
-					"recommended": {
-						"type": "boolean",
-						"description": "Кecommended product (true/false)"
-					},
-					"title": {
-						"type": "string",
-						"description": "Product title"
-					},
-					"amount": {
-						"type": "number",
-						"description": "Number of grams",
-						"example": "100"						
-					}							
-				}
-			},
 			"DiaryDeleteProductsRequest": {
 				"type": "object",
 				"required": ["productId", "date"],
@@ -1029,36 +1111,7 @@
 					}					
 				}
 			},
-			"DiaryAddProductsResponse": {
-				"type": "object",
-				"properties": {
-					"date": {
-						"type": "string",
-						"description": "Add date",
-						"example": "dd/mm/yyyy"
-					},
-					"owner": {
-						"type": "string",
-						"description": "Owner"
-					},
-					"productId": {
-						"type": "string",
-						"description": "Product id"
-					},
-					"calories": {
-						"type": "number",
-						"description": "Calories"
-					},
-					"category": {
-						"type": "string",
-						"description": "Food category"
-					},
-					"recommended": {
-						"type": "boolean",
-						"description": "Recommended product"
-					}				
-				}
-			},
+			
 			"DiaryDeleteProductsResponse": {
 				"type": "object",
 				"properties": {
