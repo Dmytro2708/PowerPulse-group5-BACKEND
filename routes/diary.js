@@ -19,28 +19,28 @@ const { schemasDiary } = require("../models/diary");
 const diaryRouter = express.Router();
 
 diaryRouter.post(
-  "/product",
+  "/addproduct",
   authenticate,
   validateBody(schemasDiary.createDairyProductSchema),
   addProduct
 );
 
 diaryRouter.delete(
-  "/product",
+  "/delproduct",
   authenticate,
   validateBody(schemasDiary.deleteDairyProductSchema),
   deleteProduct
 );
 
 diaryRouter.post(
-  "/exercise",
+  "/addexercise",
   authenticate,
   validateBody(schemasDiary.createDairyExerciseSchema),
   addExercise
 );
 
 diaryRouter.delete(
-  "/exercise",
+  "/delexercise",
   authenticate,
   validateBody(schemasDiary.deleteDiaryExerciseSchema),
   deleteExercise

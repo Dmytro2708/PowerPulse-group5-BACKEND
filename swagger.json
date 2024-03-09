@@ -213,12 +213,16 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Update avatar object",
-          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": ""
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
               }
             }
           }
@@ -229,7 +233,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AvatarsResponse"
+                  "$ref": "#/components/schemas/AvatarResponse"
                 }
               }
             }
@@ -649,18 +653,17 @@
       "get": {
         "tags": ["Diary"],
         "summary": "Get Diary",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "date",
+            "description":	"date: DD/MM/YYYY"
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Get Diary",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DiaryGetRequest"
-              }
-            }
-          }
         },
         "responses": {
           "201": {
@@ -736,15 +739,9 @@
           }
         }
       },
-      "AvatarsRequest": {
-        "type": "file",
-        "required": ["avatar"],
-        "properties": {
-          "avatar": {
-            "type": "file",
-            "description": "New avatar URL"
-          }
-        }
+      "AvatarRequest": {
+        "type": "file"
+       
       },
       "AddUserDataRequest": {
         "type": "object",
@@ -835,7 +832,9 @@
           }
         }
       },
-      "ProductsByBloodTypeResponseRequest": {},
+      "ProductsByBloodTypeResponseRequest": {
+
+      },
       "DiaryAddProductRequest": {
         "type": "object",
         "required": ["productId", "date", "amount", "calories"],
@@ -996,7 +995,7 @@
           }
         }
       },
-      "AvatarsResponse": {
+      "AvatarResponse": {
         "type": "object",
         "properties": {
           "avatarURL": {
