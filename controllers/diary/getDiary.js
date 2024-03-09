@@ -5,54 +5,25 @@ const { Product } = require("../../models/products");
 
 const getDiary = async (req, res) => {
   const { _id: owner } = req.user;
-  const { date } = req.body;
+  const { date } = req.query;
 
-  const userFind = await Diary.findOne({ date, owner });
-  if (!userFind) {
-    throw HttpError(404);
-  } else {
-const resultExercises = await Diary.find(
-  { date, owner },
-  '-products -amountAll -Calories'
-).populate("exercises.exerciseId", "bodyPart equipment name target");
- 
- const resultProducts = await Diary.find(
-   { date, owner }, 
-   '-exercises -burnedCalories -ExercisesTime'
- ).populate(
-    "products.productId",
-    "weight category title groupBloodNotAllowed"
-      );
+  const diaryEntry = await Diary.findOne({ date, owner })
+    .populate({
+      path: "exercises.exerciseId",
+      select: "bodyPart burnedCalories equipment name target",
+    })
+    .populate({
+      path: "products.productId",
+      select: "weight category calories title groupBloodNotAllowed",
+    });
 
-    const infoUserProdactsExercises = {
-      exercises: resultExercises,
-      products: resultProducts,
-    };
-    res.status(201).json(infoUserProdactsExercises);
+  if (!diaryEntry) {
+    throw HttpError(404, "Dairy entry not found");
   }
+  if (!diaryEntry.exercises || !diaryEntry.products) {
+    throw HttpError(404, "Dairy entry not found");
+  }
+  res.status(200).json(diaryEntry);
 };
-// const getDiary = async (req, res) => {
-//   const { _id: owner } = req.user;
-//   const { date } = req.body;
 
-//   try {
-//     const diaryEntry = await Diary.findOne({ date, owner })
-//       .populate({
-//         path: "exercises.exerciseId",
-//         select: "bodyPart burnedCalories equipment name target",
-//       })
-//       .populate({
-//         path: "products.productId",
-//         select: "weight category calories title groupBloodNotAllowed",
-//       });
-
-//     if (!diaryEntry) {
-//       throw HttpError(404);
-//     }
-
-//     res.status(200).json(diaryEntry);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 module.exports = ctrlWrapper(getDiary);
