@@ -99,7 +99,7 @@ const diarySchema= new Schema({
     products: [
             {
              productId: {
-                type: Schema.Types.ObjectId,
+                type: String,
                 ref: 'product',
                },
               calories: {
@@ -114,7 +114,7 @@ const diarySchema= new Schema({
     exercises: [
             {            
              exerciseId: {
-                type: Schema.Types.ObjectId,
+                type: String,
                 ref: 'exercise',
                },
              calories: {

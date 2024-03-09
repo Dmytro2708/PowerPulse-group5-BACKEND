@@ -30,6 +30,7 @@ const deleteProduct = async (req, res) => {
 
     res.status(200).json({ message: "Product deleted" });
   }
+
 };
 
 module.exports = ctrlWrapper(deleteProduct);

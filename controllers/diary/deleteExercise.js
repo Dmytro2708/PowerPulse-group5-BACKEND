@@ -33,6 +33,7 @@ const deleteExercise = async (req, res) => {
 
     res.status(200).json({ message: "Exercise deleted" });
   }
+
 };
 
 module.exports = ctrlWrapper(deleteExercise);
