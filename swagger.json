@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "title": "PowerPulse-group5",
     "description": "Showing off swagger-ui-express",
     "license": {
@@ -213,12 +213,16 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Update avatar object",
-          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/AvatarsRequest"
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
               }
             }
           }
@@ -229,7 +233,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AvatarsResponse"
+                  "$ref": "#/components/schemas/AvatarResponse"
                 }
               }
             }
@@ -364,7 +368,15 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Get exercises by type",
-        "parameters": [],
+        "parameters": [
+          {
+          "in": "query",
+          "name": "type",
+          "required": true,
+          "type": "string",
+          "description":	"type: Body parts, Muscles, Equipment"
+        }
+      ],
         "security": [{ "Bearer": [] }],
         "requestBody": {},
         "responses": {
@@ -435,7 +447,7 @@
     "/api/products/": {
       "get": {
         "tags": ["Products"],
-        "summary": "Get all exercises",
+        "summary": "Get all products",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {},
@@ -473,7 +485,7 @@
         }
       }
     },
-    "/diary/addproduct": {
+    "/api/diary/addproduct": {
       "post": {
         "tags": ["Diary"],
         "summary": "Add products",
@@ -514,7 +526,7 @@
         }
       }
     },
-    "/diary/delproduct": {
+    "/api/diary/delproduct": {
       "delete": {
         "tags": ["Diary"],
         "summary": "Delete products",
@@ -555,7 +567,7 @@
         }
       }
     },
-    "/diary/addexercise": {
+    "/api/diary/addexercise": {
       "post": {
         "tags": ["Diary"],
         "summary": "Add exercise",
@@ -596,7 +608,7 @@
         }
       }
     },
-    "/diary/delexercise": {
+    "/api/diary/delexercise": {
       "delete": {
         "tags": ["Diary"],
         "summary": "Delete exercise",
@@ -637,22 +649,21 @@
         }
       }
     },
-    "/diary/": {
+    "/api/diary/": {
       "get": {
         "tags": ["Diary"],
         "summary": "Get Diary",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "date",
+            "description":	"date: DD/MM/YYYY"
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Get Diary",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DiaryGetRequest"
-              }
-            }
-          }
         },
         "responses": {
           "201": {
@@ -728,15 +739,9 @@
           }
         }
       },
-      "AvatarsRequest": {
-        "type": "object",
-        "required": ["avatarURL"],
-        "properties": {
-          "avatarURL": {
-            "type": "string",
-            "description": "New avatar URL"
-          }
-        }
+      "AvatarRequest": {
+        "type": "file"
+       
       },
       "AddUserDataRequest": {
         "type": "object",
@@ -827,7 +832,9 @@
           }
         }
       },
-      "ProductsByBloodTypeResponseRequest": {},
+      "ProductsByBloodTypeResponseRequest": {
+
+      },
       "DiaryAddProductRequest": {
         "type": "object",
         "required": ["productId", "date", "amount", "calories"],
@@ -988,7 +995,7 @@
           }
         }
       },
-      "AvatarsResponse": {
+      "AvatarResponse": {
         "type": "object",
         "properties": {
           "avatarURL": {
