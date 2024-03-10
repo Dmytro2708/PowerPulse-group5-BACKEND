@@ -368,15 +368,7 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Get exercises by type",
-        "parameters": [
-          {
-          "in": "query",
-          "name": "type",
-          "required": true,
-          "type": "string",
-          "description":	"type: Body parts, Muscles, Equipment"
-        }
-      ],
+        "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {},
         "responses": {

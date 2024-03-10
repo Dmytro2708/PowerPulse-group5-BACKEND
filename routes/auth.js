@@ -29,6 +29,13 @@ router.post("/logout", authenticate, logout);
 router.patch("/avatars", authenticate, upload.single("avatar"), updateAvatar);
 
 router.patch(
+  "/",
+  authenticate,
+  validateBody(schemas.addUserDataSchema),
+  addUserData
+);
+
+router.patch(
   "/params",
   authenticate,
   validateBody(schemas.addUserParamsSchema),
