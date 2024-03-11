@@ -3,7 +3,7 @@ const Joi = require("joi");
 
 const { hendleMongooseError } = require("../helpers");
 
-const emailRegexp = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+const {emailRegexp} = require("./pattern");
 
 const userSchema = new Schema(
   {
@@ -23,15 +23,15 @@ const userSchema = new Schema(
     },
     height: {
       type: Number,
-      default: 150,
+      default: "",
     },
     currentWeight: {
       type: Number,
-      default: 35,
+      default: "",
     },
     desiredWeight: {
       type: Number,
-      default: 35,
+      default: "",
     },
     birthday: {
       type: Date,
@@ -42,22 +42,22 @@ const userSchema = new Schema(
         },
         message: "The user must be over 18 years old.",
       },
-      default: 25 / 10 / 1995,
+      default: "",
     },
     blood: {
       type: Number,
       enum: [1, 2, 3, 4],
-      default: 1,
+      default: "",
     },
     sex: {
       type: String,
       enum: ["male", "female"],
-      default: "male",
+      default: "",
     },
     levelActivity: {
       type: Number,
       enum: [1, 2, 3, 4, 5],
-      default: 1,
+      default: "",
     },
     token: {
       type: String,
@@ -81,8 +81,11 @@ const registerSchema = Joi.object({
   name: Joi.string().min(3).required().messages({
     "any.required": `Missing required name field`,
   }),
-  email: Joi.string().pattern(emailRegexp).required().messages({
-    "any.required": `Missing required email field`,
+  email: Joi.string().pattern(emailRegexp).required().empty(false).messages({
+    'string.base': 'The email must be a string.',
+    'any.required': 'The email field is required.',
+    'string.empty': 'The email must not be empty.',
+    'string.pattern.base': 'The email must be in format test@gmail.com.',
   }),
   password: Joi.string().min(6).required().messages({
     "any.required": `Missing required password field`,

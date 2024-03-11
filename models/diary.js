@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { Schema, model}= require('mongoose');
 const handleMongooseError = require('../helpers/hendleMongooseError');
-const dateRegex = require('./pattern');
+const {dateRegex} = require('./pattern');
 
 
 const createDairyExerciseSchema = Joi.object({
