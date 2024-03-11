@@ -1,35 +1,81 @@
 const Joi = require('joi');
 const { Schema, model}= require('mongoose');
 const handleMongooseError = require('../helpers/hendleMongooseError');
+const dateRegex = require('./pattern');
+
 
 const createDairyExerciseSchema = Joi.object({
-    exerciseId: Joi.string().required(), 
-    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
-    time: Joi.number().min(1).required(),
-    calories:Joi.number().min(1).required(),
+    exerciseId: Joi.string().required().messages({
+      'string.base': 'The exerciseId must be a string.',
+      'any.required': 'The exerciseId field is required.'
+    }),  
+    date: Joi.string().regex(dateRegex).required().messages({
+      'string.base': 'The date must be a string.',
+      'any.required': 'The date field is required.',
+      'string.regex.base': 'The date must be in format dd/mm/yyyy',
+    }), 
+    time: Joi.number().min(1).required().messages({
+      'number.base': 'The time must be a number.',
+      'any.required': 'The time field is required.'
+    }),
+    calories:Joi.number().min(1).required().messages({
+      'number.base': 'The calories must be a number.',
+      'any.required': 'The calories field is required.'
+    }),
     
 })
 
 const deleteDiaryExerciseSchema = Joi.object({
-	  exerciseId: Joi.string().required(),
-    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
+	  exerciseId: Joi.string().required().messages({
+      'string.base': 'The exerciseId must be a string.',
+      'any.required': 'The exerciseId field is required.'
+    }),  
+    date: Joi.string().regex(dateRegex).required().messages({
+      'string.base': 'The date must be a string.',
+      'any.required': 'The date field is required.',
+      'string.regex.base': 'The date must be in format dd/mm/yyyy',
+    }), 
 })
 
 const createDairyProductSchema = Joi.object({
-    productId: Joi.string().required(), 
-    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
-    amount: Joi.number().min(1).required(),
-    calories:Joi.number().min(1).required(),
+    productId: Joi.string().required().messages({
+      'string.base': 'The productId must be a string.',
+      'any.required': 'The productId field is required.'
+    }),  
+    date: Joi.string().regex(dateRegex).required().messages({
+      'string.base': 'The date must be a string.',
+      'any.required': 'The date field is required.',
+      'string.regex.base': 'The date must be in format dd/mm/yyyy',
+    }), 
+    amount: Joi.number().min(1).required().messages({
+      'number.base': 'The amount must be a number.',
+      'any.required': 'The amount field is required.'
+    }),
+    calories:Joi.number().min(1).required().messages({
+      'number.base': 'The calories must be a number.',
+      'any.required': 'The calories field is required.'
+    }),
     
 })
 
 const deleteDairyProductSchema = Joi.object({
-    productId: Joi.string().required(),
-    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
+    productId: Joi.string().required().messages({
+      'string.base': 'The productId must be a string.',
+      'any.required': 'The productId field is required.'
+    }),  
+    date: Joi.string().regex(dateRegex).required().messages({
+      'string.base': 'The date must be a string.',
+      'any.required': 'The date field is required.',
+      'string.regex.base': 'The date must be in format dd/mm/yyyy',
+    }),  
   });
 
   const getDairySchema = Joi.object({
-    date: Joi.string().regex(/^[0-3][0-9]\/[0-1][0-9]\/\d{4}$/).required(), 
+    date: Joi.string().regex(dateRegex).required().messages({
+      'string.base': 'The date must be a string.',
+      'any.required': 'The date field is required.',
+      'string.regex.base': 'The date must be in format dd/mm/yyyy',
+    }),  
   });
   
   const schemasDiary = {
@@ -43,16 +89,6 @@ const deleteDairyProductSchema = Joi.object({
 
 const diarySchema= new Schema({
 
-    exerciseId: {
-        type: Schema.Types.ObjectId,
-        ref: 'exercise',
-   },
-
-    productId: {
-        type: Schema.Types.ObjectId,
-        ref: 'product',
-   },
-
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'user',
@@ -62,19 +98,6 @@ const diarySchema= new Schema({
         type: String,
         required: [true, 'Data is required']
     },
-
-    calories: {
-        type: Number,
-    },
-
-    time: {
-        type: Number,
-    },
-
-    amount: {
-        type: Number,
-        min: 1,
-      },
     
     amountAll: {
       type: Number,
