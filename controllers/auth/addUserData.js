@@ -4,10 +4,10 @@ const { HttpError, ctrlWrapper, calculateBMR } = require("../../helpers");
 
 
 const addUserData = async (req, res) => {
-      const { email } = req.user;
-      const updatedData = await User.findOneAndUpdate({ email }, req.body, {
+      const { _id } = req.user;
+      const updatedData = await User.findOneAndUpdate({ _id }, req.body, {
         new: true,
-      });
+      }).select('-password');
   
       const { desiredWeight, height, birthday, sex, levelActivity } = updatedData;
   
