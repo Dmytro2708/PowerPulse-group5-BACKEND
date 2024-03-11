@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "version": "1.0.4",
+    "version": "1.0.5",
     "title": "PowerPulse-group5",
     "description": "Showing off swagger-ui-express",
     "license": {
@@ -757,14 +757,17 @@
         "properties": {
           "height": {
             "type": "number",
+            "default": 150,
             "description": "User height"
           },
           "currentWeight": {
             "type": "number",
+            "default": 120,
             "description": "User current Weight"
           },
           "desiredWeight": {
             "type": "number",
+            "default": 60,
             "description": "User desired Weight"
           },
           "birthday": {
@@ -773,6 +776,7 @@
           },
           "blood": {
             "type": "number",
+            "default": 1,
             "description": "User blood group"
           },
           "sex": {
@@ -781,6 +785,7 @@
           },
           "levelActivity": {
             "type": "number",
+            "default": 1,
             "description": "User level Activity"
           }
         }
@@ -804,14 +809,17 @@
           },
           "height": {
             "type": "number",
+            "default": 150,
             "description": "User height"
           },
           "currentWeight": {
             "type": "number",
+            "default": 120,
             "description": "User current Weight"
           },
           "desiredWeight": {
             "type": "number",
+            "default": 60,
             "description": "User desired Weight"
           },
           "birthday": {
@@ -820,6 +828,7 @@
           },
           "blood": {
             "type": "number",
+            "default": 4,
             "description": "User blood group"
           },
           "sex": {
@@ -828,6 +837,7 @@
           },
           "levelActivity": {
             "type": "number",
+            "default": 1,
             "description": "User level Activity"
           }
         }
@@ -1019,10 +1029,6 @@
             "type": "string",
             "descroption": "User email"
           },
-          "password": {
-            "type": "string",
-            "descroption": "User password"
-          },
           "height": {
             "type": "number",
             "description": "User height"
@@ -1075,10 +1081,6 @@
           "email": {
             "type": "string",
             "descroption": "User email"
-          },
-          "password": {
-            "type": "string",
-            "descroption": "User password"
           },
           "height": {
             "type": "number",

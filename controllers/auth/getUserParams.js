@@ -2,8 +2,8 @@ const { User } = require("../../models/user");
 const { HttpError, ctrlWrapper } = require("../../helpers");
 
 const getUserParams = async (req, res, next) => {
-      const { email } = req.user;
-      const result = await User.findOne({ email });
+      const { _id } = req.user;
+      const result = await User.findOne({ _id }).select('-password');
       if (!result) {
         HttpError(404, 'Not found');
       }

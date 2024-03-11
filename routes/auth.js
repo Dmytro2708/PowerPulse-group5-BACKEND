@@ -35,6 +35,6 @@ router.patch(
   addUserData
 );
 
-router.get("/getuser", authenticate, getUserParams);
+router.get("/", authenticate, getUserParams);
 
 module.exports = router;
