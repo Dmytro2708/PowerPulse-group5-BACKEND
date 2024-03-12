@@ -327,7 +327,22 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Get all exercises",
-        "parameters": [],
+        "parameters": [
+          {
+						"in": "path",
+						"name": "filter",
+						"required": true,
+						"type": "string",
+						"description":	""
+					},
+          {
+						"in": "path",
+						"name": "value",
+						"required": true,
+						"type": "string",
+						"description":	""
+					}
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {},
         "responses": {
@@ -368,7 +383,9 @@
       "get": {
         "tags": ["Exercises"],
         "summary": "Get exercises by type",
-        "parameters": [],
+        "parameters": [
+         
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {},
         "responses": {
