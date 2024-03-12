@@ -1,5 +1,4 @@
 const bcrypt = require("bcrypt");
-const gravatar = require("gravatar");
 const jwt = require("jsonwebtoken");
 
 const { SECRET_KEY } = process.env;
@@ -17,9 +16,8 @@ const register = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-  const avatarURL = gravatar.url(email);
 
-  const newUser = await User.create({ ...req.body, password: hashPassword, avatarURL });
+  const newUser = await User.create({ ...req.body, password: hashPassword });
 
   const payload = { id: newUser._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
