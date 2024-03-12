@@ -2,23 +2,7 @@ const { HttpError, ctrlWrapper } = require("../../helpers");
 const Filter = require("../../models/filters");
 
 const getFiltersByType = async (req, res) => {
-  const { filter, value } = req.query;
-
-  if (!filter || !value) {
-    throw HttpError(400, "Missing filter parameter");
-  }
-
-  let filters;
-  switch (filter) {
-    case "Body parts":
-    case "Muscles":
-    case "Equipment":
-      filters = await Filter.find({ name: value, filter: filter });
-      break;
-    default:
-      throw HttpError(400, "Invalid filter parameter");
-  }
-
+  const filters = await Filter.find({});
   if (!filters || filters.length === 0) {
     throw HttpError(404, "Filters not found");
   }
