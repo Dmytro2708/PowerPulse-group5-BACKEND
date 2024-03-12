@@ -16,6 +16,9 @@ const exerciseSchema = new Schema(
     name: {
       type: String,
     },
+    target: {
+      type: String,
+    },
     burnedCalories: {
       type: Number,
     },
