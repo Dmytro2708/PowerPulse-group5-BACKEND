@@ -47,17 +47,16 @@ const userSchema = new Schema(
     blood: {
       type: Number,
       enum: [1, 2, 3, 4],
-      default: "1",
+      default: "",
     },
     sex: {
       type: String,
       enum: ["male", "female"],
-      default: "male",
     },
     levelActivity: {
       type: Number,
       enum: [1, 2, 3, 4, 5],
-      default: "1",
+      default: "",
     },
     token: {
       type: String,
