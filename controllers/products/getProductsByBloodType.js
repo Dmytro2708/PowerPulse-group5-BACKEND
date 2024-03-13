@@ -6,15 +6,15 @@ const getProductsByBloodType = async (req, res) => {
 
   const userBloodType = req.user.blood;
 
-  const query = {};
-  title && (query.title = { $regex: title, $options: "i" });
-  category && (query.category = category);
+  const filters = {};
+  if (title) filters.title = { $regex: title, $options: "i" };
+  if (category) filters.category = category;
 
   if (recommended !== undefined) {
-    query[`groupBloodNotAllowed.${userBloodType}`] =
+    filters[`groupBloodNotAllowed.${userBloodType}`] =
       recommended === "true" ? false : true;
   }
-  const filteredProducts = await Product.find(query);
+  const filteredProducts = await Product.find(filters);
 
   if (!filteredProducts || filteredProducts.length === 0) {
     throw HttpError(404, "Products not found");
