@@ -17,7 +17,7 @@ const getProductsByBloodType = async (req, res) => {
   const filteredProducts = await Product.find(filters);
 
   if (!filteredProducts || filteredProducts.length === 0) {
-    throw HttpError(404, "Products not found");
+    return res.status(200).json({ products: [] });
   }
 
   res.status(200).json({ products: filteredProducts });
